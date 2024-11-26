@@ -7,7 +7,6 @@ using UnityEngine.UI;
 /// Manages the game's scoring system, including the display of scores and player health.
 public class ScoreManager : MonoBehaviour
 {
-    
     /// Singleton instance of the ScoreManager.
     public static ScoreManager instance;
 

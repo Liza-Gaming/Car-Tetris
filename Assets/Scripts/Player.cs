@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
+/**
+ * Controlling the player
+ */
 public class Player : MonoBehaviour
 {
     [SerializeField]
