@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-// https://www.youtube.com/watch?v=YUcvy9PHeXs&t=208s&ab_channel=CocoCode
 public class Player : MonoBehaviour
 {
     [SerializeField]
@@ -15,11 +14,15 @@ public class Player : MonoBehaviour
     [Tooltip("Movement speed in meters per second")]
     private float _speed = 5f;
 
+    [SerializeField]
+    [Tooltip("The maximum health the player can have")]
     public int maxHealth = 3;
-    public static int currentHealth = 3;
+
+    public static int currentHealth = 3; //The current health of the player.
 
     private Rigidbody rb;
 
+    // Direction vector to apply movement.
     Vector3 moveDir = Vector3.zero;
 
     bool isAlive;
@@ -54,6 +57,7 @@ public class Player : MonoBehaviour
         rb.linearVelocity = moveDir * _speed; // 'speed' should be a predefined float value
     }
 
+    // Handles collisions with other objects like enemies, points, and lives.
     private void OnCollisionEnter(Collision other)
     {
 
@@ -90,6 +94,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //  Reduces the player's health by the specified damage amount.
     void TakeDamage(int damage)
     {
         currentHealth -= damage;

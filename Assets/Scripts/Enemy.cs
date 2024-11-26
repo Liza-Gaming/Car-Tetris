@@ -1,30 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] public float speed = 3f;
+    [Tooltip("The speed at which the enemy moves.")]
+    [SerializeField] private float speed = 3f;
+
+    [Tooltip("Time in seconds before the enemy is destroyed automatically.")]
     [SerializeField] private float lifetime = 5f;
 
     private Rigidbody rb;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        //transform.rotation = Quaternion.Euler(0, 180, 0);
+        if (rb == null)
+        {
+            Debug.LogWarning("Rigidbody component missing from Enemy.");
+        }
+
+        // Be destroyed after a set lifetime
         Destroy(gameObject, lifetime);
-
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
+    // FixedUpdate is called at a fixed time interval
     private void FixedUpdate()
     {
+        // Set the enemy's rotation to face backwards
         transform.rotation = Quaternion.Euler(0, 180, 0);
-        rb.linearVelocity = Vector3.back * speed;
+
+        // Apply a backward force to the Rigidbody to move the enemy (Axis z)
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.back * speed;
+        }
     }
 }
-

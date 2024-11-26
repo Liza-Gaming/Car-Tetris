@@ -1,73 +1,99 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 
-//https://www.youtube.com/watch?v=YUcvy9PHeXs&t=210s&ab_channel=CocoCode
+/**
+ * I learned from here: https://www.youtube.com/watch?v=YUcvy9PHeXs&t=210s&ab_channel=CocoCode
+ */
+/// Manages the game's scoring system, including the display of scores and player health.
 public class ScoreManager : MonoBehaviour
 {
+    
+    /// Singleton instance of the ScoreManager.
     public static ScoreManager instance;
 
+    /// Text UI element for displaying the player's current score.
     public Text scoreText;
-    public Text highscoreText;
-    public RawImage heart1;
-    public RawImage heart2;
-    public RawImage heart3;
 
+    /// Text UI element for displaying the player's high score.
+    public Text highscoreText;
+
+    /// Images representing player health/lives.
+    public RawImage heart1, heart2, heart3;
+
+    /// Current score of the player.
     public int score = 0;
+
+    /// Player's highest recorded score.
     public int highscore = 0;
 
-    private void Awake( ) { instance = this; }
+    /// Ensures that only one instance of ScoreManager exists.
+    private void Awake()
+    {
+        instance = this;
+    }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    /// Initializes the score and high score on game start.
     void Start()
     {
         highscore = PlayerPrefs.GetInt("highscore", 0);
-        scoreText.text = score.ToString() + " POINTS";
-        highscoreText.text = "High Score: " + highscore.ToString();
+        UpdateScoreText();
+        UpdateHighscoreText();
     }
 
+    /// Adds a point to the player's score and updates the display.
     public void AddPoint()
     {
         score++;
-        scoreText.text = score.ToString() + " POINTS";
-        if (highscore < score)
-        {
-            PlayerPrefs.SetInt("highscore", score);
-        }
-       }
+        UpdateScoreText();
 
-
-        public void RemoveHeart()
-    {
-        // Assuming you have a reference to a Player object with a health property
-        if (Player.currentHealth == 2)
+        if (score > highscore)
         {
-            heart1.enabled = false; // Hide the third heart
-        }
-
-        if (Player.currentHealth == 1)
-        {
-            heart2.enabled = false; // Hide the second heart
-        }
-
-        if (Player.currentHealth == 0)
-        {
-            heart3.enabled = false; // Hide the first heart
+            highscore = score;
+            PlayerPrefs.SetInt("highscore", highscore);
+            UpdateHighscoreText();
         }
     }
 
-    public void AddHeart()
+    /// Updates the score text UI element.
+    private void UpdateScoreText()
     {
-        // Assuming you have a reference to a Player object with a health property
+        scoreText.text = $"{score} POINTS";
+    }
+
+    /// Updates the highscore text UI element.
+    private void UpdateHighscoreText()
+    {
+        highscoreText.text = $"High Score: {highscore}";
+    }
+
+    /// Decreases the player's health display by disabling heart images.
+    public void RemoveHeart()
+    {
         if (Player.currentHealth == 2)
         {
-            heart1.enabled = true; 
+            heart1.enabled = false;
+        }
+        else if (Player.currentHealth == 1)
+        {
+            heart2.enabled = false;
+        }
+        else if (Player.currentHealth == 0)
+        {
+            heart3.enabled = false;
+        }
+    }
+
+    /// Increases the player's health display by enabling heart images.
+    public void AddHeart()
+    {
+        if (Player.currentHealth == 2)
+        {
+            heart1.enabled = true;
             Player.currentHealth++;
         }
-
-        if (Player.currentHealth == 1)
+        else if (Player.currentHealth == 1)
         {
-            heart2.enabled = true; 
+            heart2.enabled = true;
             Player.currentHealth++;
         }
     }

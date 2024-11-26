@@ -3,8 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Taken from https://github.com/PrismYoutube/Unity-Car-Controller/blob/main/Code
-//  https://www.youtube.com/watch?v=DU-yminXEX0&ab_channel=Sigma%27sUnited
+/**
+ * This script fo driving effect.
+ * Taken from https://github.com/PrismYoutube/Unity-Car-Controller/blob/main/Code
+ * I watched this Youtube to learn how to do that: https://www.youtube.com/watch?v=DU-yminXEX0&ab_channel=Sigma%27sUnited
+ */
 public class CarController : MonoBehaviour
 {
     private float horizontalInput, verticalInput;

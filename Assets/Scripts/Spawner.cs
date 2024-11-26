@@ -1,33 +1,46 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// A component for spawning enemy game objects at random intervals and positions. 
 public class Spawner : MonoBehaviour
 {
+    /// Prefabs of enemies to spawn.
     [SerializeField] private GameObject[] enemyPrefabs;
+
+    /// Flag indicating whether spawning is enabled.
     [SerializeField] private bool canSpawn = true;
-    //[SerializeField] private float spawnRate;
 
-    [Tooltip("Minimum time between consecutive spawns, in seconds")][SerializeField] float minTimeBetweenSpawns = 1f;
-    [Tooltip("Maximum time between consecutive spawns, in seconds")][SerializeField] float maxTimeBetweenSpawns = 3f;
+    /// The rate at which enemies are spawned.
+    [SerializeField] private float spawnRate;
 
+    /// Minimum time between consecutive spawns, in seconds.
+    [Tooltip("Minimum time between consecutive spawns, in seconds")]
+    [SerializeField] private float minTimeBetweenSpawns = 0.5f;
 
-    // Start is called before the first frame update
+    /// Maximum time between consecutive spawns, in seconds.
+    [Tooltip("Maximum time between consecutive spawns, in seconds")]
+    [SerializeField] private float maxTimeBetweenSpawns = 1.5f;
+
+    /// Initializes the spawning coroutine.
     void Start()
     {
-        StartCoroutine(spawner());
+        StartCoroutine(SpawnerCoroutine());
     }
 
-    private IEnumerator spawner()
+    /// Coroutine for handling enemy spawning.
+    private IEnumerator SpawnerCoroutine()
     {
-        WaitForSeconds wait = new WaitForSeconds(spawnRate);
         while (canSpawn)
         {
-            yield return wait;
-            int rand = Random.Range(0, enemyPrefabs.Length);
-            GameObject enemyTospawn = enemyPrefabs[rand];
+            float timeBetweenSpawnsInSeconds = Random.Range(minTimeBetweenSpawns, maxTimeBetweenSpawns);
+            yield return new WaitForSeconds(timeBetweenSpawnsInSeconds);
 
-            Instantiate(enemyTospawn, transform.position, Quaternion.identity);
+            // Select a random enemy prefab to spawn.
+            int rand = Random.Range(0, enemyPrefabs.Length);
+            GameObject enemyToSpawn = enemyPrefabs[rand];
+
+            // Instantiate the enemy at the spawner's position.
+            Instantiate(enemyToSpawn, transform.position, Quaternion.identity);
         }
     }
 }
