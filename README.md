@@ -1,5 +1,6 @@
 # Car Tetris
 This is an assignment in game development course.
+
 Navigate your car against the flow of relentless traffic, Dodge and swerve through oncoming vehicles.
 Use your keyboard arrows to to dodge the cars and collect golden points or health.
 Be careful! you can't hold more than 3 lives.
