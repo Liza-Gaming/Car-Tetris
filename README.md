@@ -1,4 +1,4 @@
-# Car Tetris
+# Tetris Racing
 This is an assignment in game development course.
 
 Navigate your car against the flow of relentless traffic, Dodge and swerve through oncoming vehicles.
